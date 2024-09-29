@@ -1,7 +1,18 @@
-<script setup>
-  function onClick (clicker) {
-    console.log(clicker);
-  };
+<script>
+  export default {
+  data() {
+    return {
+      message: 'Hello Vue!'
+    };
+  },
+
+  methods: {
+    onClick(clicker) {
+      console.log(clicker);
+    }
+  }
+};
+
 </script>
 
 <template>
