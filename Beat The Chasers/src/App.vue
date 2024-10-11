@@ -5,7 +5,7 @@
         Swap player
       </button>
       <button @click="onClick('pause')">
-        {{ hasGameStarted ? (isGamePaused ? 'Resume' : 'Pause') : 'Start' }}
+        {{ pauseText }}
       </button>
     </div>
     <div ref="display1" class="time-display"></div>
@@ -21,8 +21,6 @@ export default {
     return {
       time1: 60000,
       time2: 45000,
-      tenths1: 0,
-      tenths2: 0,
       currentPlayer: 'player',
       intervalId: null,
       isGamePaused: true,
@@ -94,20 +92,34 @@ export default {
 
   computed: {
     formattedTime1() {
-    const minutes = Math.floor(this.time1 / 60000);
-    const seconds = Math.floor((this.time1 % 60000) / 1000);
-    const milliseconds = this.time1 % 1000;
-    const tenths = Math.floor(milliseconds / 100);
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${tenths.toString().padStart(1, '0')}`;
-  },
+      const minutes = Math.floor(this.time1 / 60000);
+      const seconds = Math.floor((this.time1 % 60000) / 1000);
+      const milliseconds = this.time1 % 1000;
+      const tenths = Math.floor(milliseconds / 100);
+      return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${tenths.toString().padStart(1, '0')}`;
+    },
   
-  formattedTime2() {
-    const minutes = Math.floor(this.time2 / 60000);
-    const seconds = Math.floor((this.time2 % 60000) / 1000);
-    const milliseconds = this.time2 % 1000;
-    const tenths = Math.floor(milliseconds / 100);
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${tenths.toString().padStart(1, '0')}`;
-  }
+    formattedTime2() {
+      const minutes = Math.floor(this.time2 / 60000);
+      const seconds = Math.floor((this.time2 % 60000) / 1000);
+      const milliseconds = this.time2 % 1000;
+      const tenths = Math.floor(milliseconds / 100);
+      return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${tenths.toString().padStart(1, '0')}`;
+    },
+
+    pauseText() {
+      let text = '';
+      if (this.hasGameStarted) {
+        if (this.isGamePaused) {
+          text = 'Resume';
+        } else {
+          text = 'Pause';
+        }
+      } else {
+        text = 'Start';
+      }
+      return text;
+    },
   }
 };
 </script>
