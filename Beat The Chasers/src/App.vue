@@ -1,37 +1,48 @@
 <template>
   <div class="container">
     <div class="button-container">
-      <button @click="onClick('swap')">
+      <button @click="swap()">
         Swap player
       </button>
-      <button @click="onClick('pause')">
+      <button @click="playPause()">
         {{ buttonText }}
       </button>
     </div>
-    <div ref="display1" class="time-display"></div>
-    <div ref="display2" class="time-display"></div>
+    <div v-if="showTimeSettings" class="time-settings">
+      <label for="time2Display">Chaser starting time:</label>
+      <input id="chaserMinutes" v-model="chaserMinutes" type="number" placeholder="Minutes" @input="onTimeInput()" />
+      <input id="chaserSeconds" v-model="chaserSeconds" type="number" placeholder="Seconds" @input="onTimeInput()" />
+    </div>
+    <div class="time-container">
+      <div ref="display1" class="time-display"></div>
+      <div ref="display2" class="time-display"></div>
+    </div>
   </div>
 </template>
 
 <script>
-import beatTheChasersAudio from '@/assets/Intro.wav';
+import introAudio from '@/assets/Intro.wav';
 
 export default {
   data() {
     return {
       time1: 60000,
-      time2: 45000,
+      time2: 60000,
+      chaserMinutes: 0,
+      chaserSeconds: 50,
       currentPlayer: 'player',
       intervalId: null,
       isGamePaused: true,
       hasGameStarted: false,
-      introAudio: new Audio(beatTheChasersAudio),
+      introAudio: new Audio(introAudio),
       audioPaused: true,
+      showTimeSettings: true,
     };
   },
 
   mounted() {
     this.updateDisplay();
+    this.onTimeInput();
     this.introAudio.addEventListener('play', () => {
       this.audioPaused = false;
     });
@@ -41,27 +52,28 @@ export default {
   },
 
   methods: {
-    onClick(clicker) {
-      if (clicker === 'pause') {
-        if (!this.hasGameStarted) {
-          this.introAudio.addEventListener("ended", (event) => {
-            this.hasGameStarted = true;
-            this.isGamePaused = false;
-            this.startTimer();
-          });
-          this.introAudio.play();
+    playPause() {
+      if (!this.hasGameStarted) {
+        this.showTimeSettings = false;
+        this.introAudio.addEventListener("ended", (event) => {
+          this.hasGameStarted = true;
+          this.isGamePaused = false;
+          this.startTimer();
+        });
+        this.introAudio.play();
+      } else {
+        this.isGamePaused = !this.isGamePaused;
+        if (this.isGamePaused) {
+          this.stopTimer();
         } else {
-          this.isGamePaused = !this.isGamePaused;
-          if (this.isGamePaused) {
-            this.stopTimer();
-          } else {
-            this.startTimer();
-          }
+          this.startTimer();
         }
-      } else if (clicker === 'swap') {
-        this.currentPlayer = (this.currentPlayer === 'player') ? 'chaser' : 'player';
-        this.updateDisplay(); // Add this line
       }
+    },
+
+    swap() {
+      this.currentPlayer = (this.currentPlayer === 'player') ? 'chaser' : 'player';
+      this.updateDisplay();
     },
 
     startTimer() {
@@ -95,6 +107,11 @@ export default {
       this.$refs.display2.classList.toggle('active-player', this.currentPlayer === 'chaser');
       this.$refs.display2.innerText = `Chaser: ${this.formattedTime2}`;
     },
+
+    onTimeInput() {
+      this.time2 = (this.chaserMinutes * 60 + this.chaserSeconds) * 1000;
+      this.updateDisplay();
+    }
   },
 
   computed: {
@@ -160,5 +177,10 @@ export default {
 .active-player {
   font-weight: bold;
   color: red;
+}
+
+.time-container {
+  top: 200px;
+  position: fixed;
 }
 </style>
