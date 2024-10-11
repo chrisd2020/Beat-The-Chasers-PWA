@@ -2,8 +2,8 @@
 export default {
   data() {
     return {
-      time1: 45000,
-      time2: 60000,
+      time1: 60000,
+      time2: 45000,
       tenths1: 0,
       tenths2: 0,
       currentPlayer: 'player',
