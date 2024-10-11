@@ -5,7 +5,7 @@
         Swap player
       </button>
       <button @click="onClick('pause')">
-        {{ pauseText }}
+        {{ buttonText }}
       </button>
     </div>
     <div ref="display1" class="time-display"></div>
@@ -26,11 +26,18 @@ export default {
       isGamePaused: true,
       hasGameStarted: false,
       introAudio: new Audio(beatTheChasersAudio),
+      audioPaused: true,
     };
   },
 
   mounted() {
     this.updateDisplay();
+    this.introAudio.addEventListener('play', () => {
+      this.audioPaused = false;
+    });
+    this.introAudio.addEventListener('pause', () => {
+      this.audioPaused = true;
+  });
   },
 
   methods: {
@@ -107,16 +114,12 @@ export default {
       return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${tenths.toString().padStart(1, '0')}`;
     },
 
-    pauseText() {
-      let text = '';
+    buttonText() {
+      let text;
       if (this.hasGameStarted) {
-        if (this.isGamePaused) {
-          text = 'Resume';
-        } else {
-          text = 'Pause';
-        }
+        text = this.isGamePaused ? 'Resume' : 'Pause';
       } else {
-        text = 'Start';
+        text = this.audioPaused ? 'Start' : 'Starting...';
       }
       return text;
     },
