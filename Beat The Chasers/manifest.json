@@ -1,0 +1,15 @@
+{
+    "short_name": "Beat The Chasers",
+    "name": "Beat The Chasers",
+    "icons": [
+      {
+        "src": "/src/assets/icon.jpg",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff"
+  }
