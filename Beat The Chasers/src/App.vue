@@ -14,14 +14,15 @@
       <input id="chaserSeconds" v-model="chaserSeconds" type="number" placeholder="Seconds" @input="onTimeInput()" />
     </div>
     <div class="time-container">
-      <div ref="display1" class="time-display"></div>
-      <div ref="display2" class="time-display"></div>
+      <div ref="display1" class="time-display">Player: <span ref="playerTime" class="time"></span></div>
+      <div ref="display2" class="time-display">Chaser: <span ref="chaserTime" class="time"></span></div>
     </div>
   </div>
 </template>
 
 <script>
 import introAudioFile from '@/assets/Intro.wav';
+import finishAudioFile from '@/assets/Beat The Chasers.mp3';
 
 export default {
   data() {
@@ -35,7 +36,9 @@ export default {
       isGamePaused: true,
       hasGameStarted: false,
       introAudio: new Audio(introAudioFile),
+      finishAudio: new Audio(finishAudioFile),
       audioPaused: true,
+      finishAudioPaused: true,
       showTimeSettings: true,
     };
   },
@@ -53,6 +56,12 @@ export default {
     });
     this.introAudio.addEventListener('pause', () => {
       this.audioPaused = true;
+    });
+    this.finishAudio.addEventListener('play', () => {
+      this.finishAudioPaused = false;
+    });
+    this.finishAudio.addEventListener('pause', () => {
+      this.finishAudioPaused = true;
     });
   },
 
@@ -76,21 +85,33 @@ export default {
       this.updateDisplay();
     },
 
+    finish(player) {
+      this.finishAudio.play();
+      player === 'player' ? this.time1 = 0 : this.time2 = 0;
+      this.stopTimer();
+      this.updateDisplay();
+      this.flash(player);
+    },
+
+    flash(player) {
+      if (player === 'player') {
+        this.$refs.display1.classList.add('blink');
+      } else {
+        this.$refs.display2.classList.add('blink');
+      }
+    },
+
     startTimer() {
       this.intervalId = setInterval(() => {
         if (this.currentPlayer === 'player') {
           this.time1 -= 100;
           if (this.time1 <= 0) {
-            this.time1 = 0;
-            this.stopTimer();
-            alert('Player ran out of time!');
+            this.finish(this.currentPlayer)
           }
         } else {
           this.time2 -= 100;
           if (this.time2 <= 0) {
-            this.time2 = 0;
-            this.stopTimer();
-            alert('Chaser ran out of time!');
+            this.finish(this.currentPlayer);
           }
         }
         this.updateDisplay();
@@ -103,9 +124,9 @@ export default {
 
     updateDisplay() {
       this.$refs.display1.classList.toggle('active-player', this.currentPlayer === 'player');
-      this.$refs.display1.innerText = `Player: ${this.formattedTime1}`;
+      this.$refs.playerTime.innerText = `${this.formattedTime1}`;
       this.$refs.display2.classList.toggle('active-player', this.currentPlayer === 'chaser');
-      this.$refs.display2.innerText = `Chaser: ${this.formattedTime2}`;
+      this.$refs.chaserTime.innerText = `${this.formattedTime2}`;
     },
 
     onTimeInput() {
@@ -171,16 +192,41 @@ export default {
   font-weight: bold;
   margin-bottom: 20px;
   background-color: rgba(255, 255, 255, 0.5); /* Add this line */
-  padding: 10px; /* Add some padding to make the background visible */
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  padding: 18px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding-left: 30px;
+  padding-right: 30px;
+  color: white;
+  text-align: center;
+  font-family: sans-serif;
 }
 
 .active-player {
   font-weight: bold;
-  color: red;
+  color: black;
 }
 
 .time-container {
   top: 200px;
   position: fixed;
 }
+
+.blink .time {
+  animation: blink-animation 1s step-start infinite;
+  -webkit-animation: blink-animation 1s step-start infinite;
+}
+@keyframes blink-animation {
+  50% {
+    color: transparent;
+  }
+}
+@-webkit-keyframes blink-animation {
+  50% {
+    color: transparent;
+  }
+}
+/* Blue 2c1f66 */
+/* Red ba0a0a */
 </style>
