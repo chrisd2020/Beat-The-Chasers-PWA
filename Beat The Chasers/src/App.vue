@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import introAudio from '@/assets/Intro.wav';
+import introAudioFile from '@/assets/Intro.wav';
 
 export default {
   data() {
@@ -34,7 +34,7 @@ export default {
       intervalId: null,
       isGamePaused: true,
       hasGameStarted: false,
-      introAudio: new Audio(introAudio),
+      introAudio: new Audio(introAudioFile),
       audioPaused: true,
       showTimeSettings: true,
     };
@@ -43,23 +43,23 @@ export default {
   mounted() {
     this.updateDisplay();
     this.onTimeInput();
+    this.introAudio.addEventListener("ended", (event) => {
+      this.hasGameStarted = true;
+      this.isGamePaused = false;
+      this.startTimer();
+    });
     this.introAudio.addEventListener('play', () => {
       this.audioPaused = false;
     });
     this.introAudio.addEventListener('pause', () => {
       this.audioPaused = true;
-  });
+    });
   },
 
   methods: {
     playPause() {
       if (!this.hasGameStarted) {
         this.showTimeSettings = false;
-        this.introAudio.addEventListener("ended", (event) => {
-          this.hasGameStarted = true;
-          this.isGamePaused = false;
-          this.startTimer();
-        });
         this.introAudio.play();
       } else {
         this.isGamePaused = !this.isGamePaused;
