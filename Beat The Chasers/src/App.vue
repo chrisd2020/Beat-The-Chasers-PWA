@@ -1,4 +1,21 @@
+<template>
+  <div class="container">
+    <div class="button-container">
+      <button @click="onClick('swap')">
+        Swap player
+      </button>
+      <button @click="onClick('pause')">
+        {{ hasGameStarted ? (isGamePaused ? 'Resume' : 'Pause') : 'Start' }}
+      </button>
+    </div>
+    <div ref="display1" class="time-display"></div>
+    <div ref="display2" class="time-display"></div>
+  </div>
+</template>
+
 <script>
+import beatTheChasersAudio from '@/assets/Intro.wav';
+
 export default {
   data() {
     return {
@@ -8,8 +25,9 @@ export default {
       tenths2: 0,
       currentPlayer: 'player',
       intervalId: null,
-      isPaused: true,
-      hasStarted: false
+      isGamePaused: true,
+      hasGameStarted: false,
+      introAudio: new Audio(beatTheChasersAudio),
     };
   },
 
@@ -20,13 +38,16 @@ export default {
   methods: {
     onClick(clicker) {
       if (clicker === 'pause') {
-        if (!this.hasStarted) {
-          this.hasStarted = true;
-          this.isPaused = false;
-          this.startTimer();
+        if (!this.hasGameStarted) {
+          this.introAudio.addEventListener("ended", (event) => {
+            this.hasGameStarted = true;
+            this.isGamePaused = false;
+            this.startTimer();
+          });
+          this.introAudio.play();
         } else {
-          this.isPaused = !this.isPaused;
-          if (this.isPaused) {
+          this.isGamePaused = !this.isGamePaused;
+          if (this.isGamePaused) {
             this.stopTimer();
           } else {
             this.startTimer();
@@ -36,7 +57,6 @@ export default {
         this.currentPlayer = (this.currentPlayer === 'player') ? 'chaser' : 'player';
         this.updateDisplay(); // Add this line
       }
-      // ... rest of your code ...
     },
 
     startTimer() {
@@ -91,21 +111,6 @@ export default {
   }
 };
 </script>
-
-<template>
-  <div class="container">
-    <div class="button-container">
-      <button @click="onClick('swap')">
-        Swap player
-      </button>
-      <button @click="onClick('pause')">
-        {{ hasStarted ? (isPaused ? 'Resume' : 'Pause') : 'Start' }}
-      </button>
-    </div>
-    <div ref="display1" class="time-display"></div>
-    <div ref="display2" class="time-display"></div>
-  </div>
-</template>
 
 <style>
 .button-container {
