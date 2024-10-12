@@ -53,8 +53,8 @@ export default {
       intervalId: null,
       isGamePaused: true,
       hasGameStarted: false,
-      introAudio: new Audio(introAudioFile),
-      finishAudio: new Audio(finishAudioFile),
+      introAudio: null,
+      finishAudio: null,
       audioPaused: true,
       finishAudioPaused: true,
       showTimeSettings: true,
@@ -62,6 +62,35 @@ export default {
   },
 
   mounted() {
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(
+          (registration) => {
+            console.log(`Service worker registered with scope: ${registration.scope}`);
+          },
+          (error) => {
+            console.error(`Error registering service worker: ${error}`);
+          }
+        );
+      });
+    }
+
+    // Load cached audio files
+    caches.match('/src/assets/Intro.wav').then((response) => {
+      if (response) {
+        this.introAudio = new Audio();
+        this.introAudio.src = response.url;
+      }
+    });
+
+    caches.match('/src/assets/Beat The Chasers.mp3').then((response) => {
+      if (response) {
+        this.finishAudio = new Audio();
+        this.finishAudio.src = response.url;
+      }
+    });
+
     this.updateDisplay();
     this.onTimeInput();
     this.introAudio.addEventListener("ended", (event) => {
