@@ -3,7 +3,7 @@
     "name": "Beat The Chasers",
     "icons": [
       {
-        "src": "./src/assets/icon.jpg",
+        "src": "./assets/icon.jpg",
         "sizes": "256x256",
         "type": "image/png"
       }
