@@ -1,32 +1,40 @@
 <template>
-  <div class="container">
-    <div class="button-container">
-      <div class="button-group left">
-        <button @click="swap()">
-          Swap player
-        </button>
-        <button @click="playPause()">
-          {{ buttonText }}
-        </button>
+  <div>
+    <div class="container">
+      <div class="button-container">
+        <div class="button-group left">
+          <button @click="swap()">
+            Swap player
+          </button>
+          <button @click="playPause()">
+            {{ buttonText }}
+          </button>
+        </div>
+        <div class="button-group right">
+          <button @click="swap()">
+            Swap player
+          </button>
+          <button @click="playPause()">
+            {{ buttonText }}
+          </button>
+        </div>
       </div>
-      <div class="button-group right">
-        <button @click="swap()">
-          Swap player
-        </button>
-        <button @click="playPause()">
-          {{ buttonText }}
-        </button>
+      <div class="time-container">
+        <div ref="display1" class="time-display top">Player: <span ref="playerTime" class="time"></span></div>
+        <div ref="display2" class="time-display bottom">Chaser: <span ref="chaserTime" class="time"></span></div>
       </div>
     </div>
-    <div v-if="showTimeSettings" class="time-settings">
-      <label for="chaserSeconds">Chaser starting time:</label>
-      <input id="chaserMinutes" v-model="chaserMinutes" type="number" max="60" placeholder="Minutes" @input="onTimeInput()" />
-      <input id="chaserSeconds" v-model="chaserSeconds" type="number" max="59" placeholder="Seconds" @input="onTimeInput()" />
+    <div v-if="showTimeSettings" class="modal">
+      <div class="time-settings">
+        <label class="modal-heading">Chaser starting time</label>
+        <label for="chaserMinutes">Minutes</label>
+        <input id="chaserMinutes" v-model="chaserMinutes" type="number" max="60" min="0" placeholder="Minutes" @input="onTimeInput()" />
+        <label for="chaserSeconds">Seconds</label>
+        <input id="chaserSeconds" v-model="chaserSeconds" type="number" max="59" min="1" placeholder="Seconds" @input="onTimeInput()" />
+        <button @click="showTimeSettings = false">Done</button>
+      </div>
     </div>
-    <div class="time-container">
-      <div ref="display1" class="time-display top">Player: <span ref="playerTime" class="time"></span></div>
-      <div ref="display2" class="time-display bottom">Chaser: <span ref="chaserTime" class="time"></span></div>
-    </div>
+    <div v-if="showTimeSettings" class="modal-backdrop"></div>
   </div>
 </template>
 
@@ -179,15 +187,15 @@ export default {
 button {
   backdrop-filter: blur(5px);
   background-color: rgba(253 238 250 / 50%);
-  border: 3px white solid;
+  border: 2.5px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.3);
   color: white;
   cursor: pointer;
   font-family: sans-serif;
   font-size: 24px;
   font-weight: bold;
   height: 50%;
-  margin-bottom: 20px;
   padding-bottom: 15px;
   padding-left: 27px;
   padding-right: 27px;
@@ -195,16 +203,33 @@ button {
   text-align: center;
 }
 
+.modal {
+  backdrop-filter: blur(5px);
+  background-color: rgba(255 141 141 / 50%);
+  border: 2.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.3);
+  color: white;
+  font-family: sans-serif;
+  height: 415px;
+  left: calc(50% - 250px);
+  position: absolute;
+  top: calc(50% - 207.5px);
+  width: 500px;
+  z-index: 5;
+}
+
 .button-container {
   align-items: center;
   display: flex;
   justify-content: space-between;
   height: 100%;
-  margin-top: 50px; /* Add this line */
+  margin-bottom: 50px;
+  margin-top: 50px;
   width: 100%;
 }
 
-.button-container button {
+.button-container button:first-child {
   margin-bottom: 10px;
 }
 
@@ -227,10 +252,11 @@ button {
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
   height: 85px;
   justify-content: center;
+  line-height: 43px;
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
@@ -259,6 +285,7 @@ button {
   height: 100%;
   justify-content: space-between;
   position: fixed;
+  width: 400px;
 }
 
 .button-group {
@@ -269,8 +296,6 @@ button {
 }
 
 .button-group button {
-  border: 2.5px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 80px rgba(0, 0, 0, 0.3);
   width: 100%;
 }
 
@@ -287,7 +312,53 @@ button {
 }
 
 .bottom {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
+}
+
+.time-settings {
+  display: flex;
+  flex-direction: column;
+  font-size: 30px;
+  font-weight: 600;
+  padding: 20px;
+  text-align: center;
+}
+
+.time-settings input {
+  backdrop-filter: blur(5px);
+  background-color: rgba(253 238 250 / 50%);
+  border: 2.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.3);
+  color: white;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  height: 30px;
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  outline: none;
+  padding: 5px;
+  text-align: center;
+  width: 40px;
+}
+
+.modal-backdrop {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255 141 141 / 50%);
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.time-settings input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.modal-heading {
+  margin-bottom: 30px;
 }
 
 .blink .time {
