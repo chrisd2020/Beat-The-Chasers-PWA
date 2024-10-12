@@ -1,0 +1,32 @@
+{
+    "short_name": "Beat The Chasers",
+    "name": "Beat The Chasers",
+    "icons": [
+      {
+        "src": "/src/assets/icon.jpg",
+        "sizes": "256x256",
+        "type": "image/png"
+      }
+    ],
+    "screenshots": [
+      {
+        "src": "/src/assets/screenshot.png",
+        "form_factor": "wide",
+        "type": "image/jpeg",
+        "sizes": "2305x1407"
+      },
+      {
+        "src": "/src/assets/screenshot.png",
+        "type": "image/jpeg",
+        "sizes": "2305x1407"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#dd2126",
+    "service_worker": {
+      "src": "/sw.js",
+      "scope": "/"
+    }
+  }
