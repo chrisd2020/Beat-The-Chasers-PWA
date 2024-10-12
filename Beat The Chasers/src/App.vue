@@ -177,31 +177,31 @@ export default {
 
 <style>
 button {
+  backdrop-filter: blur(5px);
+  background-color: rgba(253 238 250 / 50%);
   border: 3px white solid;
-  padding-top: 15px;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  height: 50%;
+  margin-bottom: 20px;
   padding-bottom: 15px;
   padding-left: 27px;
   padding-right: 27px;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  backdrop-filter: blur(5px);
-  border-radius: 20px;
-  background-color: rgba(253 238 250 / 50%);
-  color: white;
+  padding-top: 15px;
   text-align: center;
-  font-family: sans-serif;
-  cursor: pointer;
-  height: 50%;
 }
 
 .button-container {
-  display: flex;
   align-items: center;
-  margin-top: 50px; /* Add this line */
-  width: 100%;
+  display: flex;
   justify-content: space-between;
   height: 100%;
+  margin-top: 50px; /* Add this line */
+  width: 100%;
 }
 
 .button-container button {
@@ -209,64 +209,62 @@ button {
 }
 
 .container {
+  align-items: center;
   background-image: url('./assets/beat_the_chasers.jpg');
-  background-size: cover;
   background-position: center;
-  height: 100vh;
+  background-size: cover;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 100vh;
 }
 
 .time-display {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  backdrop-filter: blur(5px);
-  border-radius: 20px;
-  padding: 18px;
-  background-color: rgba(253 238 250 / 50%);
-  padding-left: 30px;
-  padding-right: 30px;
-  color: #5a0912;
-  text-align: center;
-  font-family: sans-serif;
-  max-width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  height: 85px;
   align-content: center;
-  transition: color 0.5s;
+  backdrop-filter: blur(5px);
+  background-color: rgba(253 238 250 / 50%);
+  border-radius: 20px;
+  color: #5a0912;
   display: flex;
   flex-direction: column;
+  font-family: sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  height: 85px;
   justify-content: center;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 50%;
+  padding: 18px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-align: center;
+  transition: color 0.5s;
+  width: 100%;
 }
 
 .active-player {
-  font-weight: bold;
+  border: 4px solid rgba(255, 255, 255, 0.2);
   color: white;
-  /* border: 3px white solid; */
-  padding-top: 14px;
+  font-weight: bold;
   padding-bottom: 14px;
   padding-left: 26px;
   padding-right: 26px;
-  /* border: 2.5px solid rgba(255, 255, 255, 0.2); */
-  border: 4px solid rgba(255, 255, 255, 0.2);
+  padding-top: 14px;
 }
 
 .time-container {
-  height: 100%;
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
+  height: 100%;
   justify-content: space-between;
   position: fixed;
 }
 
 .button-group {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 100%;
 }
 
