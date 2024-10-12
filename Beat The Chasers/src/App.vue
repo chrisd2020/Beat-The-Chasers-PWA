@@ -322,6 +322,7 @@ button {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 25%;
 }
 
 .button-group button {
@@ -329,11 +330,11 @@ button {
 }
 
 .left {
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .right {
-  margin-right: 40px;
+  margin-right: 20px;
 }
 
 .top {
