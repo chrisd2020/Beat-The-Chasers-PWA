@@ -1,21 +1,31 @@
 <template>
   <div class="container">
     <div class="button-container">
-      <button @click="swap()">
-        Swap player
-      </button>
-      <button @click="playPause()">
-        {{ buttonText }}
-      </button>
+      <div class="button-group left">
+        <button @click="swap()">
+          Swap player
+        </button>
+        <button @click="playPause()">
+          {{ buttonText }}
+        </button>
+      </div>
+      <div class="button-group right">
+        <button @click="swap()">
+          Swap player
+        </button>
+        <button @click="playPause()">
+          {{ buttonText }}
+        </button>
+      </div>
     </div>
     <div v-if="showTimeSettings" class="time-settings">
-      <label for="time2Display">Chaser starting time:</label>
-      <input id="chaserMinutes" v-model="chaserMinutes" type="number" placeholder="Minutes" @input="onTimeInput()" />
-      <input id="chaserSeconds" v-model="chaserSeconds" type="number" placeholder="Seconds" @input="onTimeInput()" />
+      <label for="chaserSeconds">Chaser starting time:</label>
+      <input id="chaserMinutes" v-model="chaserMinutes" type="number" max="60" placeholder="Minutes" @input="onTimeInput()" />
+      <input id="chaserSeconds" v-model="chaserSeconds" type="number" max="59" placeholder="Seconds" @input="onTimeInput()" />
     </div>
     <div class="time-container">
-      <div ref="display1" class="time-display">Player: <span ref="playerTime" class="time"></span></div>
-      <div ref="display2" class="time-display">Chaser: <span ref="chaserTime" class="time"></span></div>
+      <div ref="display1" class="time-display top">Player: <span ref="playerTime" class="time"></span></div>
+      <div ref="display2" class="time-display bottom">Chaser: <span ref="chaserTime" class="time"></span></div>
     </div>
   </div>
 </template>
@@ -166,11 +176,32 @@ export default {
 </script>
 
 <style>
+button {
+  border: 3px white solid;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 27px;
+  padding-right: 27px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  background-color: rgba(253 238 250 / 50%);
+  color: white;
+  text-align: center;
+  font-family: sans-serif;
+  cursor: pointer;
+  height: 50%;
+}
+
 .button-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   margin-top: 50px; /* Add this line */
+  width: 100%;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .button-container button {
@@ -191,26 +222,74 @@ export default {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
-  background-color: rgba(255, 255, 255, 0.5); /* Add this line */
   backdrop-filter: blur(5px);
   border-radius: 20px;
   padding: 18px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(253 238 250 / 50%);
   padding-left: 30px;
   padding-right: 30px;
-  color: white;
+  color: #5a0912;
   text-align: center;
   font-family: sans-serif;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 85px;
+  align-content: center;
+  transition: color 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .active-player {
   font-weight: bold;
-  color: black;
+  color: white;
+  /* border: 3px white solid; */
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 26px;
+  padding-right: 26px;
+  /* border: 2.5px solid rgba(255, 255, 255, 0.2); */
+  border: 4px solid rgba(255, 255, 255, 0.2);
 }
 
 .time-container {
-  top: 200px;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
   position: fixed;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.button-group button {
+  border: 2.5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+.left {
+  margin-left: 40px;
+}
+
+.right {
+  margin-right: 40px;
+}
+
+.top {
+  margin-top: 50px;
+}
+
+.bottom {
+  margin-bottom: 40px;
 }
 
 .blink .time {
@@ -227,6 +306,4 @@ export default {
     color: transparent;
   }
 }
-/* Blue 2c1f66 */
-/* Red ba0a0a */
 </style>
