@@ -3,7 +3,7 @@
     "name": "Beat The Chasers",
     "icons": [
       {
-        "src": "./icon.jpg",
+        "src": "/Beat-The-Chasers-PWA/assets/icon.jpg",
         "sizes": "256x256",
         "type": "image/png"
       }
