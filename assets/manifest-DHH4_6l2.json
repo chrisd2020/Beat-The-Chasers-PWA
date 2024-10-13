@@ -1,6 +1,13 @@
 {
     "short_name": "Beat The Chasers",
     "name": "Beat The Chasers",
+    "icons": [
+      {
+        "src": "Beat-The-Chasers-PWA/assets/icon.jpg",
+        "sizes": "256x256",
+        "type": "image/png"
+      }
+    ],
     "screenshots": [
       {
         "src": "Beat-The-Chasers-PWA/assets/screenshot.png",
