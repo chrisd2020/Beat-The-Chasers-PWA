@@ -10,13 +10,13 @@
     ],
     "screenshots": [
       {
-        "src": "Beat-The-Chasers-PWA/assets/screenshot.png",
+        "src": "./screenshot.png",
         "form_factor": "wide",
         "type": "image/jpeg",
         "sizes": "2305x1407"
       },
       {
-        "src": "Beat-The-Chasers-PWA/assets/screenshot.png",
+        "src": "./screenshot.png",
         "type": "image/jpeg",
         "sizes": "2305x1407"
       }
