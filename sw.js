@@ -32,7 +32,7 @@ if (workbox) {
           './index.html',
           './styles.css',
           './script.js',
-          './src/assets/Intro.wav',
+          './assets/Intro.wav',
           './src/assets/Beat The Chasers.mp3',
         ]);
       })
