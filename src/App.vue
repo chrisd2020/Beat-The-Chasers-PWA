@@ -39,9 +39,6 @@
 </template>
 
 <script>
-import introAudioFile from '@/assets/Intro.wav';
-import finishAudioFile from '@/assets/Beat The Chasers.mp3';
-
 export default {
   data() {
     return {
@@ -65,7 +62,7 @@ export default {
     // Register service worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(
+        navigator.serviceWorker.register('./sw.js').then(
           (registration) => {
             console.log(`Service worker registered with scope: ${registration.scope}`);
           },
@@ -76,28 +73,11 @@ export default {
       });
     }
 
-    // Load cached audio files
-    caches.match('/src/assets/Intro.wav').then((response) => {
-      if (response) {
-        this.introAudio = new Audio();
-        this.introAudio.src = response.url;
-      }
-    });
-
-    caches.match('/src/assets/Beat The Chasers.mp3').then((response) => {
-      if (response) {
-        this.finishAudio = new Audio();
-        this.finishAudio.src = response.url;
-      }
-    });
+    this.introAudio = new Audio('./assets/Intro.wav');
+    this.finishAudio = new Audio('./assets/Beat_The_Chasers.mp3');
 
     this.updateDisplay();
     this.onTimeInput();
-    this.introAudio.addEventListener("ended", (event) => {
-      this.hasGameStarted = true;
-      this.isGamePaused = false;
-      this.startTimer();
-    });
     this.introAudio.addEventListener('play', () => {
       this.audioPaused = false;
     });
@@ -109,6 +89,11 @@ export default {
     });
     this.finishAudio.addEventListener('pause', () => {
       this.finishAudioPaused = true;
+    });
+    this.introAudio.addEventListener("ended", (event) => {
+      this.hasGameStarted = true;
+      this.isGamePaused = false;
+      this.startTimer();
     });
   },
 

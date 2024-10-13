@@ -29,11 +29,9 @@ if (workbox) {
     event.waitUntil(
       caches.open('my-cache').then((cache) => {
         return cache.addAll([
-          '/index.html',
-          '/styles.css',
-          '/script.js',
-          '/src/assets/intro.wav',
-          '/src/assets/Beat The Chasers.mp3',
+          './index.html',
+          './assets/Intro.wav',
+          './assets/Beat_The_Chasers.mp3',
         ]);
       })
     );
