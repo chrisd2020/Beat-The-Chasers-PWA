@@ -30,8 +30,6 @@ if (workbox) {
       caches.open('my-cache').then((cache) => {
         return cache.addAll([
           './index.html',
-          './styles.css',
-          './script.js',
           './assets/Intro.wav',
           './src/assets/Beat The Chasers.mp3',
         ]);
