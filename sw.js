@@ -31,7 +31,7 @@ if (workbox) {
         return cache.addAll([
           './index.html',
           './assets/Intro.wav',
-          './src/assets/Beat_The_Chasers.mp3',
+          './assets/Beat_The_Chasers.mp3',
         ]);
       })
     );
