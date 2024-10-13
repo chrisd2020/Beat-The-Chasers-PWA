@@ -26,7 +26,7 @@
     "background_color": "#ffffff",
     "theme_color": "#dd2126",
     "service_worker": {
-      "src": "/sw.js",
+      "src": "./sw.js",
       "scope": "/"
     }
   }
