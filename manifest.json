@@ -23,7 +23,7 @@
     ],
     "start_url": "/Beat-The-Chasers-PWA/",
     "display": "standalone",
-    "background_color": "#ffffff",
+    "background_color": "#dd2126",
     "theme_color": "#dd2126",
     "service_worker": {
       "src": "./sw.js",
