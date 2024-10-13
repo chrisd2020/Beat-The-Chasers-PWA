@@ -73,7 +73,7 @@ export default {
       });
     }
 
-    this.introAudio = new Audio('./assets/Intro.wav');
+    this.introAudio = new Audio('./assets/Intro.mp3');
     this.finishAudio = new Audio('./assets/Beat_The_Chasers.mp3');
 
     this.updateDisplay();
